@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numi Pro Ania v3.1</title>
+    <style>
+        :root {
+            --soft-bg: #f8fafc;
+            --primary: #64748b;
+            --accent: #94a3b8;
+            --gold-soft: #d4af37;
+            --white: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--soft-bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .app-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 850px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Header Style */
+        .header {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to right, #ffffff, #f1f5f9);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .version-tag {
+            font-size: 12px;
+            background: #e2e8f0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .logout-link {
+            text-decoration: none;
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .logout-link:hover { opacity: 0.7; }
+
+        .content { padding: 30px; }
+
+        h1 { font-weight: 300; color: var(--primary); margin: 0 0 30px 0; text-align: center; }
+        h1 b { font-weight: 700; color: var(--gold-soft); }
+
+        .input-group { margin-bottom: 20px; }
+        label { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; display: block; text-transform: uppercase; }
+
+        input[type="text"], textarea {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            background: #fcfcfc;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus { outline: none; border-color: var(--gold-soft); background: #fff; }
+
+        /* Tagi - Nowoczesne Pigułki */
+        .section-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 16px;
+        }
+
+        .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .pill {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #475569;
+        }
+        .pill:hover { background: var(--gold-soft); color: white; border-color: var(--gold-soft); }
+
+        /* Przyciski */
+        .btn-container { display: flex; gap: 15px; margin-top: 30px; }
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .btn-main { background: var(--primary); color: white; }
+        .btn-accent { background: var(--gold-soft); color: white; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        #output {
+            margin-top: 30px;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 16px;
+            border: 1px dashed #cbd5e1;
+            white-space: pre-wrap;
+            color: #334155;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-card">
+    <div class="header">
+        <div>
+            <span style="font-size: 18px; font-weight: 700; color: #64748b;">Numi Pro</span>
+            <span class="version-tag">Ania v3.1</span>
+        </div>
+        <div class="logout-link" onclick="wyloguj()">
+            <span>Wyloguj</span> 🚪
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Generator <b>Ogłoszeń</b></h1>
+
+        <div class="input-group">
+            <label>Tytuł Przedmiotu</label>
+            <input type="text" id="title" placeholder="Wpisz nazwę monety lub banknotu...">
+        </div>
+
+        <div class="section-box">
+            <label>Opis Stanu Zachowania</label>
+            <div class="pill-container">
+                <span class="pill" onclick="add('Egzemplarz w doskonałym stanie zachowania, z głębokim, lustrzanym połyskiem. ')">#StanWybitny</span>
+                <span class="pill" onclick="add('Naturalna, wieloletnia patyna gabinetowa podkreślająca autentyczność. ')">#Patyna</span>
+                <span class="pill" onclick="add('Moneta posiada pełne czytelne detale, bez śladów niewłaściwego czyszczenia. ')">#Oryginał</span>
+                <span class="pill" onclick="add('Ostry relief i idealnie zachowane pole monety. ') #Relief</span>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <label>Rzadkość i Kolekcja</label>
+            <div class="pill-container">
+                <span class="pill" onclick="add('Rzadka pozycja na rynku kolekcjonerskim, ceniona przez numizmatyków. ')">#Rzadkość</span>
+                <span class="pill" onclick="add('Pochodzi z wyselekcjonowanego zbioru prywatnego. ')">#Kolekcja</span>
+                <span class="pill" onclick="add('Doskonała propozycja do zaawansowanych zbiorów oraz jako lokata kapitału. ')">#Inwestycja</span>
+                <span class="pill" onclick="add('Moneta o wysokiej prezencji ogólnej. ')">#Prezencja</span>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <label>Wysyłka i Bezpieczeństwo</label>
+            <div class="pill-container">
+                <span class="pill" onclick="add('Gwarantuję pancerne i bezpieczne zapakowanie przesyłki. ')">#Bezpieczeństwo</span>
+                <span class="pill" onclick="add('Wysyłka realizowana priorytetowo w ciągu 24h. ')">#SzybkaDostawa</span>
+                <span class="pill" onclick="add('Przedmiot zgodny ze zdjęciami, które przedstawiają oferowaną monetę. ')">#RealFoto</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Opis dodatkowy</label>
+            <textarea id="details" rows="6" placeholder="Klikaj pigułki powyżej lub dopisz własne informacje..."></textarea>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn btn-main" onclick="generuj()">GENERUJ TEKST</button>
+            <button class="btn btn-accent" onclick="kopiuj()">KOPIUJ DO OLX</button>
+        </div>
+
+        <div id="output">Twoje gotowe ogłoszenie pojawi się tutaj...</div>
+    </div>
+</div>
+
+<script>
+    function add(text) {
+        document.getElementById('details').value += text;
+    }
+
+    function wyloguj() {
+        if(confirm("Czy chcesz wylogować (wyczyścić formularz)?")) {
+            document.getElementById('title').value = "";
+            document.getElementById('details').value = "";
+            document.getElementById('output').innerText = "Wylogowano. Formularz jest gotowy do nowej pracy.";
+            window.scrollTo(0,0);
+        }
+    }
+
+    function generuj() {
+        const t = document.getElementById('title').value;
+        const d = document.getElementById('details').value;
+        if(!t) { alert("Podaj tytuł monety!"); return; }
+
+        const template = `✨ NUMIZMATYKA: ${t.toUpperCase()}\n` +
+            `──────────────────────────────\n\n` +
+            `Zapraszam do zakupu wyjątkowego okazu numizmatycznego.\n\n` +
+            `🔹 SZCZEGÓŁY OFERTY:\n${d}\n\n` +
+            `🔹 DLACZEGO WARTO:\n` +
+            `• Gwarantowana autentyczność i rzetelny opis.\n` +
+            `• Bezpieczna i szybka wysyłka (pancerne pakowanie).\n` +
+            `• Stały kontakt ze sprzedającym.\n\n` +
+            `Zapraszam do zapoznania się z moimi pozostałymi ogłoszeniami. Buduj swoją kolekcję świadomie!`;
+
+        document.getElementById('output').innerText = template;
+    }
+
+    function kopiuj() {
+        const text = document.getElementById('output').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Skopiowano! Możesz wkleić opis na OLX.");
+        });
+    }
+</script>
+
+</body>
+</html>
