@@ -3,242 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numi Pro Ania v3.1</title>
+    <title>Numi Pro Ania v3.5 | Pro Fashion & OLX</title>
     <style>
         :root {
-            --soft-bg: #f8fafc;
-            --primary: #64748b;
-            --accent: #94a3b8;
-            --gold-soft: #d4af37;
-            --white: #ffffff;
-            --text: #1e293b;
+            --bg: #0a0a0c;
+            --ania-pink: #ff007a;
+            --vinted-teal: #00c1d1;
+            --olx-gold: #fbbf24;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--soft-bg);
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            background-image: radial-gradient(circle at 20% 20%, #1e1b4b 0%, transparent 40%), 
+                              radial-gradient(circle at 80% 80%, #4c1d95 0%, transparent 40%);
+            color: #e2e8f0;
             margin: 0;
             display: flex;
             justify-content: center;
             padding: 20px;
+            min-height: 100vh;
         }
 
-        .app-card {
-            background: var(--white);
+        .ania-shell {
+            background: rgba(15, 15, 20, 0.8);
+            backdrop-filter: blur(25px);
             width: 100%;
-            max-width: 850px;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 950px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* Header Style */
-        .header {
-            padding: 20px 30px;
+        .ania-shell::after {
+            content: "ANIA v3.5";
+            position: absolute;
+            bottom: 10px;
+            right: 30px;
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(255, 0, 122, 0.03);
+            z-index: -1;
+        }
+
+        .nav-header {
+            padding: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to right, #ffffff, #f1f5f9);
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--border);
         }
 
-        .version-tag {
-            font-size: 12px;
-            background: #e2e8f0;
-            padding: 4px 10px;
-            border-radius: 20px;
-            color: var(--primary);
-            font-weight: bold;
-        }
+        .logo { font-size: 26px; font-weight: 900; background: linear-gradient(45deg, #fff, var(--ania-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .logout-link {
-            text-decoration: none;
-            color: #ef4444;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        
-        .logout-link:hover { opacity: 0.7; }
-
-        .content { padding: 30px; }
-
-        h1 { font-weight: 300; color: var(--primary); margin: 0 0 30px 0; text-align: center; }
-        h1 b { font-weight: 700; color: var(--gold-soft); }
-
-        .input-group { margin-bottom: 20px; }
-        label { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; display: block; text-transform: uppercase; }
-
-        input[type="text"], textarea {
-            width: 100%;
-            border: 1px solid #e2e8f0;
+        .logout-btn {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 10px 25px;
             border-radius: 12px;
-            padding: 14px;
-            font-size: 16px;
-            background: #fcfcfc;
+            cursor: pointer;
+            font-weight: 800;
+            text-transform: uppercase;
             transition: 0.3s;
-            box-sizing: border-box;
+        }
+        .logout-btn:hover { background: #ff4d4d; color: white; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
+
+        .mode-toggles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 25px 30px;
         }
 
-        input:focus, textarea:focus { outline: none; border-color: var(--gold-soft); background: #fff; }
+        .mode-box {
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            transition: 0.4s;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: var(--glass);
+        }
 
-        /* Tagi - Nowoczesne Pigułki */
-        .section-box {
-            margin-bottom: 25px;
+        .mode-box.active-olx { border-color: var(--olx-gold); color: var(--olx-gold); box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
+        .mode-box.active-vinted { border-color: var(--vinted-teal); color: var(--vinted-teal); box-shadow: 0 0 20px rgba(0, 193, 209, 0.1); }
+
+        .main-form { padding: 0 30px 30px 30px; }
+
+        .field-group { margin-bottom: 25px; }
+        label { display: block; font-size: 11px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+
+        input, textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+            border-radius: 15px;
             padding: 15px;
-            background: #f1f5f9;
-            border-radius: 16px;
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: 0.3s;
         }
+        input:focus { border-color: var(--ania-pink); outline: none; box-shadow: 0 0 15px rgba(255,0,122,0.1); }
 
-        .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .pill-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .pill {
-            background: var(--white);
-            border: 1px solid #e2e8f0;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border-radius: 10px;
+            background: var(--glass);
+            border: 1px solid var(--border);
             font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
-            color: #475569;
         }
-        .pill:hover { background: var(--gold-soft); color: white; border-color: var(--gold-soft); }
+        .pill:hover { background: #fff; color: #000; }
 
-        /* Przyciski */
-        .btn-container { display: flex; gap: 15px; margin-top: 30px; }
-        .btn {
-            flex: 1;
-            padding: 16px;
+        .btn-action {
+            width: 100%;
+            padding: 22px;
             border: none;
-            border-radius: 14px;
-            font-weight: 700;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 900;
             cursor: pointer;
             transition: 0.3s;
-            font-size: 16px;
+            margin-bottom: 15px;
         }
-        .btn-main { background: var(--primary); color: white; }
-        .btn-accent { background: var(--gold-soft); color: white; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .btn-gen { background: linear-gradient(90deg, var(--ania-pink), #ff4d4d); color: white; box-shadow: 0 10px 20px rgba(255,0,122,0.2); }
+        .btn-copy { background: #fff; color: #000; }
 
-        #output {
-            margin-top: 30px;
+        #output-area {
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed var(--border);
             padding: 25px;
-            background: #fafafa;
-            border-radius: 16px;
-            border: 1px dashed #cbd5e1;
+            border-radius: 20px;
             white-space: pre-wrap;
-            color: #334155;
-            font-size: 15px;
             line-height: 1.6;
+            color: #cbd5e1;
         }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-<div class="app-card">
-    <div class="header">
-        <div>
-            <span style="font-size: 18px; font-weight: 700; color: #64748b;">Numi Pro</span>
-            <span class="version-tag">Ania v3.1</span>
-        </div>
-        <div class="logout-link" onclick="wyloguj()">
-            <span>Wyloguj</span> 🚪
-        </div>
+<div class="ania-shell">
+    <div class="nav-header">
+        <div class="logo">NUMI PRO ANIA v3.5</div>
+        <button class="logout-btn" onclick="wyloguj()">Wyloguj 🚪</button>
     </div>
 
-    <div class="content">
-        <h1>Generator <b>Ogłoszeń</b></h1>
+    <div class="mode-toggles">
+        <div id="m-olx" class="mode-box active-olx" onclick="switchMode('olx')">🪙 NUMIZMATYKA OLX</div>
+        <div id="m-vinted" class="mode-box" onclick="switchMode('vinted')">👗 ODZIEŻ VINTED</div>
+    </div>
 
-        <div class="input-group">
-            <label>Tytuł Przedmiotu</label>
-            <input type="text" id="title" placeholder="Wpisz nazwę monety lub banknotu...">
+    <div class="main-form">
+        <div class="field-group">
+            <label>Tytuł Ogłoszenia</label>
+            <input type="text" id="title" placeholder="Wpisz nazwę przedmiotu...">
         </div>
 
-        <div class="section-box">
-            <label>Opis Stanu Zachowania</label>
-            <div class="pill-container">
-                <span class="pill" onclick="add('Egzemplarz w doskonałym stanie zachowania, z głębokim, lustrzanym połyskiem. ')">#StanWybitny</span>
-                <span class="pill" onclick="add('Naturalna, wieloletnia patyna gabinetowa podkreślająca autentyczność. ')">#Patyna</span>
-                <span class="pill" onclick="add('Moneta posiada pełne czytelne detale, bez śladów niewłaściwego czyszczenia. ')">#Oryginał</span>
-                <span class="pill" onclick="add('Ostry relief i idealnie zachowane pole monety. ') #Relief</span>
+        <div id="section-vinted" class="hidden">
+            <label>Atrybuty Odzieży (Skład & Stan)</label>
+            <div class="pill-grid">
+                <span class="pill" onclick="add('Stan: bardzo dobry. ')">Stan BDB</span>
+                <span class="pill" onclick="add('Stan: nowy z metką. ')">Nowy z metką</span>
+                <span class="pill" onclick="add('Materiał jest elastyczny i miły w dotyku. ')">Elastyczny</span>
+                <span class="pill" onclick="add('Skład: Akryl, Poliester, Moher, Wełna, Elastan. ')">Skład (Mix Moher)</span>
+                <span class="pill" onclick="add('Skład: 100% Bawełna. ')">Bawełna</span>
+                <span class="pill" onclick="add('Z metki rozmiar , ale moim zdaniem pasuje też na . ')">Dopasowanie (Rozmiar)</span>
+                <span class="pill" onclick="add('Posiada guziczki-perełki i bufiaste rękawy. ')">Detale (Perełki)</span>
+            </div>
+            <label>Wymiary (Mierzone na płasko)</label>
+            <div class="pill-grid">
+                <span class="pill" onclick="add('\nWYMIARY:\nCała długość: cm\nSzerokość mierzona pod pachami: cm\n')">Tabela Wymiarów</span>
+                <span class="pill" onclick="add('Wymiary podaję bez rozciągania. ')">Bez rozciągania</span>
             </div>
         </div>
 
-        <div class="section-box">
-            <label>Rzadkość i Kolekcja</label>
-            <div class="pill-container">
-                <span class="pill" onclick="add('Rzadka pozycja na rynku kolekcjonerskim, ceniona przez numizmatyków. ')">#Rzadkość</span>
-                <span class="pill" onclick="add('Pochodzi z wyselekcjonowanego zbioru prywatnego. ')">#Kolekcja</span>
-                <span class="pill" onclick="add('Doskonała propozycja do zaawansowanych zbiorów oraz jako lokata kapitału. ')">#Inwestycja</span>
-                <span class="pill" onclick="add('Moneta o wysokiej prezencji ogólnej. ')">#Prezencja</span>
+        <div id="section-olx">
+            <label>Atrybuty Numizmatyczne</label>
+            <div class="pill-grid">
+                <span class="pill" onclick="add('Egzemplarz w wyśmienitym stanie zachowania. ')">Stan Wybitny</span>
+                <span class="pill" onclick="add('Naturalna, wieloletnia patyna gabinetowa. ')">Patyna</span>
+                <span class="pill" onclick="add('Gwarancja autentyczności, moneta nieczyszczona. ')">Oryginał</span>
+                <span class="pill" onclick="add('Rzadka mennica/rocznik, gratka dla kolekcjonera. ')">Rzadkość</span>
             </div>
         </div>
 
-        <div class="section-box">
-            <label>Wysyłka i Bezpieczeństwo</label>
-            <div class="pill-container">
-                <span class="pill" onclick="add('Gwarantuję pancerne i bezpieczne zapakowanie przesyłki. ')">#Bezpieczeństwo</span>
-                <span class="pill" onclick="add('Wysyłka realizowana priorytetowo w ciągu 24h. ')">#SzybkaDostawa</span>
-                <span class="pill" onclick="add('Przedmiot zgodny ze zdjęciami, które przedstawiają oferowaną monetę. ')">#RealFoto</span>
-            </div>
+        <div class="field-group">
+            <label>Opis Szczegółowy</label>
+            <textarea id="desc" rows="6" placeholder="Dodaj opis lub klikaj tagi powyżej..."></textarea>
         </div>
 
-        <div class="input-group">
-            <label>Opis dodatkowy</label>
-            <textarea id="details" rows="6" placeholder="Klikaj pigułki powyżej lub dopisz własne informacje..."></textarea>
-        </div>
+        <button class="btn-action btn-gen" onclick="generuj()">GENERUJ DLA ANI ⚡</button>
+        <button class="btn-action btn-copy" onclick="kopiuj()">KOPIUJ DO SCHOWKA 📋</button>
 
-        <div class="btn-container">
-            <button class="btn btn-main" onclick="generuj()">GENERUJ TEKST</button>
-            <button class="btn btn-accent" onclick="kopiuj()">KOPIUJ DO OLX</button>
-        </div>
-
-        <div id="output">Twoje gotowe ogłoszenie pojawi się tutaj...</div>
+        <div id="output-area">Gotowy opis pojawi się tutaj...</div>
     </div>
 </div>
 
 <script>
-    function add(text) {
-        document.getElementById('details').value += text;
+    let mode = 'olx';
+
+    function switchMode(m) {
+        mode = m;
+        document.getElementById('m-olx').className = m === 'olx' ? 'mode-box active-olx' : 'mode-box';
+        document.getElementById('m-vinted').className = m === 'vinted' ? 'mode-box active-vinted' : 'mode-box';
+        
+        document.getElementById('section-olx').classList.toggle('hidden', m !== 'olx');
+        document.getElementById('section-vinted').classList.toggle('hidden', m !== 'vinted');
     }
 
+    function add(txt) { document.getElementById('desc').value += txt; }
+
     function wyloguj() {
-        if(confirm("Czy chcesz wylogować (wyczyścić formularz)?")) {
+        if(confirm("Ania wyczyści teraz formularz (Wyloguj). Kontynuować?")) {
             document.getElementById('title').value = "";
-            document.getElementById('details').value = "";
-            document.getElementById('output').innerText = "Wylogowano. Formularz jest gotowy do nowej pracy.";
-            window.scrollTo(0,0);
+            document.getElementById('desc').value = "";
+            document.getElementById('output-area').innerText = "System gotowy.";
         }
     }
 
     function generuj() {
         const t = document.getElementById('title').value;
-        const d = document.getElementById('details').value;
-        if(!t) { alert("Podaj tytuł monety!"); return; }
+        const d = document.getElementById('desc').value;
+        if(!t) return alert("Wpisz tytuł!");
 
-        const template = `✨ NUMIZMATYKA: ${t.toUpperCase()}\n` +
-            `──────────────────────────────\n\n` +
-            `Zapraszam do zakupu wyjątkowego okazu numizmatycznego.\n\n` +
-            `🔹 SZCZEGÓŁY OFERTY:\n${d}\n\n` +
-            `🔹 DLACZEGO WARTO:\n` +
-            `• Gwarantowana autentyczność i rzetelny opis.\n` +
-            `• Bezpieczna i szybka wysyłka (pancerne pakowanie).\n` +
-            `• Stały kontakt ze sprzedającym.\n\n` +
-            `Zapraszam do zapoznania się z moimi pozostałymi ogłoszeniami. Buduj swoją kolekcję świadomie!`;
-
-        document.getElementById('output').innerText = template;
+        let final = "";
+        if(mode === 'olx') {
+            final = `🪙 NUMIZMATYKA OLX: ${t.toUpperCase()}\n━━━━━━━━━━━━━━━━━━━━\n\n${d}\n\n✅ Bezpieczna wysyłka\n✅ Gwarancja rzetelności`;
+        } else {
+            final = `👗 VINTED FASHION: ${t}\n\nOpis przedmiotu:\n${d}\n\nSerdecznie zapraszam do zakupu! ✨\n#vinted #moda #vintage #ania`;
+        }
+        document.getElementById('output-area').innerText = final;
     }
 
     function kopiuj() {
-        const text = document.getElementById('output').innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            alert("Skopiowano! Możesz wkleić opis na OLX.");
-        });
+        navigator.clipboard.writeText(document.getElementById('output-area').innerText);
+        alert("Skopiowano!");
     }
 </script>
 
